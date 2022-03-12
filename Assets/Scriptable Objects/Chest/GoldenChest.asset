@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6ba13a5eb3014b44afbb87d9adb2b8c, type: 3}
+  m_Name: GoldenChest
+  m_EditorClassIdentifier: 
+  ChestType: 0
+  CoinsStored: 0
+  GemsStored: 0
+  TimeRequiredToOpen: 0
+  GemsRequiredToOpen: 0
+  ClosedChestImage: {fileID: 0}
+  OpenedChestImage: {fileID: 0}
+  StartTimerButton: {fileID: 0}
+  OpenNowButton: {fileID: 0}
