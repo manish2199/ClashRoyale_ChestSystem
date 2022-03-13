@@ -16,13 +16,13 @@ public class ChestScriptableObject : ScriptableObject
 
    public int GemsRequiredToOpen;
 
-   public Image ClosedChestImage;
+   public Sprite ClosedChestImage;
 
-   public Image OpenedChestImage;
+   public Sprite OpenedChestImage;
   
-   public Button StartTimerButton;
+   public string TextForTimerButton;
 
-   public Button OpenNowButton;
+//    public Button OpenNowButton; 
 
 }
 

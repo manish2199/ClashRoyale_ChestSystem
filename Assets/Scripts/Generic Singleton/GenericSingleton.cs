@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class GenericSingleton<T> : MonoBehaviour where T : GenericSingleton<T>
 {
-  public static T Instance { get { return Instance; } }
+  public static T Instance { get { return instance;} protected set { instance = value; }  }
 
-  private static T instance; 
+  public static T instance; 
  
-  private void Awake()
+  protected void Awake()
   {
       CreateSingleton(); 
       print("CreateSingleton");

@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c84bc646ce72f641b4f6e4b594eae35, type: 3}
   m_Name: ChestList
   m_EditorClassIdentifier: 
-  chestScriptableObjects: []
+  chestScriptableObjects:
+  - {fileID: 11400000, guid: 985bd49ada5338e47beb5e264fc11d11, type: 2}
+  - {fileID: 11400000, guid: 3ec39d103574c444c93df5209620eac4, type: 2}
+  - {fileID: 11400000, guid: ed7f22cd505e9bd45aa24cc2d5aa16d0, type: 2}
+  - {fileID: 11400000, guid: 826a5e16b59a46240978a84d3ff4399b, type: 2}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChestModel : MonoBehaviour
+public class ChestModel 
 {
    public ChestModel(ChestScriptableObject chest)
    {
@@ -20,6 +20,8 @@ public class ChestModel : MonoBehaviour
       this.ClosedChestImage = chest.ClosedChestImage;
 
       this.OpenedChestImage = chest.OpenedChestImage;
+
+      this.TextForTimerButton = chest.TextForTimerButton;
    } 
 
    public ChestType ChestType { get; }
@@ -28,15 +30,15 @@ public class ChestModel : MonoBehaviour
 
    public int GemsStored { get; }
 
-   public int TimeRequiredToOpen { get; }
+   public int TimeRequiredToOpen { get; set; }
 
-   public int GemsRequiredToOpen { get; }
+   public int GemsRequiredToOpen { get;set; }
 
-   public Image ClosedChestImage;
+   public Sprite ClosedChestImage;
 
-   public Image OpenedChestImage;
+   public Sprite OpenedChestImage;
   
-//    public Button StartTimerButton;
+   public string TextForTimerButton;
 
 //    public Button OpenNowButton; 
 

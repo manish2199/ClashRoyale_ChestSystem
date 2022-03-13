@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6ba13a5eb3014b44afbb87d9adb2b8c, type: 3}
-  m_Name: NormalChest
+  m_Name: SilverChest
   m_EditorClassIdentifier: 
-  ChestType: 0
-  CoinsStored: 0
-  GemsStored: 0
-  TimeRequiredToOpen: 0
-  GemsRequiredToOpen: 0
-  ClosedChestImage: {fileID: 0}
-  OpenedChestImage: {fileID: 0}
-  StartTimerButton: {fileID: 0}
-  OpenNowButton: {fileID: 0}
+  ChestType: 1
+  CoinsStored: 30
+  GemsStored: 15
+  TimeRequiredToOpen: 20
+  GemsRequiredToOpen: 2
+  ClosedChestImage: {fileID: 21300000, guid: a462be60d3d366a4aaf513424adc76e3, type: 3}
+  OpenedChestImage: {fileID: 2551925020727932727, guid: 5cdb9306fe2b58c41adfea2f2ebf6ce1, type: 3}
+  TextForTimerButton: 'Start Timer '
