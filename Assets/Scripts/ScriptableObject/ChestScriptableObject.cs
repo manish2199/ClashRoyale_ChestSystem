@@ -22,8 +22,6 @@ public class ChestScriptableObject : ScriptableObject
   
    public string TextForTimerButton;
 
-//    public Button OpenNowButton; 
-
 }
 
 public enum ChestType

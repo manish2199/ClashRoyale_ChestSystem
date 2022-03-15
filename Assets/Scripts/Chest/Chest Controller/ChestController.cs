@@ -12,6 +12,9 @@ public class ChestController
 
    private bool IsChestClosed;
 
+   public static event Action<int,int> OnChestOpen;
+
+   public static event Action<int> OnPressedOpeNowButton;
 
    public ChestController ( ChestModel chestModel , ChestView chestView)
    { 
@@ -20,11 +23,11 @@ public class ChestController
        ChestView.ChestController = this;
        IsChestClosed = true;
 
-       InitializeController();
+       InitializeChest();
    }
 
 
-   private void InitializeController()
+   private void InitializeChest()
    {
        ChestView.StoredCoinsText.text ="-"+ChestModel.CoinsStored;
        ChestView.StoredGemsText.text ="-"+ChestModel.GemsStored;
@@ -35,33 +38,54 @@ public class ChestController
        ChestView.ChestImage.sprite = ChestModel.ClosedChestImage;
 
       ChestView.ButtonText.text = ChestModel.TextForTimerButton;
-
+      
       ChestView.ChestButton.onClick.AddListener( ()=> StartTimer());
    }
 
 
-   private async void StartTimer()
+   public async void StartTimer()
     {          
        if(!ChestService.Instance.IsChestTimerStart)
        {    
-            UpdateTheOpenButtonText();
+            ChestView.ChestButton.onClick.RemoveAllListeners();
+            ChestService.Instance.IsChestTimerStart = true;
+
+            UpdateOpenNowButtonText();
            
             ChestView.ChestButton.onClick.AddListener( ()=> OpenNowButton() );
             
-            ChestService.Instance.IsChestTimerStart = true;
             
             ChestView.TimerText.gameObject.SetActive(true);
 
             ChestView.TimerText.text ="Timer - " + ChestModel.TimeRequiredToOpen.ToString();
-            // Invoke the timer of chest starts
            
             await Timer();
 
            if(ChestModel.TimeRequiredToOpen <= 0)
            {
-               await OpenChest();
+               OpenChest();
            }
        }
+       else
+       {
+           await ShowWaitingPanel();
+       }
+    }
+
+    private async  System.Threading.Tasks.Task ShowWaitingPanel()
+    {
+        ChestView.AddToQueueButton.onClick.AddListener( ()=> AddChestToWaitingQueue());
+        ChestView.WaitingPanel.SetActive(true);
+       
+        await  System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1.5));
+
+        ChestView.AddToQueueButton.onClick.RemoveAllListeners();
+        ChestView.WaitingPanel.SetActive(false);
+    } 
+
+    void AddChestToWaitingQueue()
+    {
+        ChestService.Instance.AddChestInWaitingQueue(ChestView.ChestController);
     }
 
 
@@ -76,7 +100,7 @@ public class ChestController
            {
                 count = 0;
                 ChestModel.GemsRequiredToOpen--;
-                UpdateTheOpenButtonText();
+                UpdateOpenNowButtonText();
            }
           
           if(ChestView != null)
@@ -88,53 +112,73 @@ public class ChestController
         }
     }
 
-         
 
-    private async void OpenNowButton()
+    private void OpenNowButton()
     {
-       if(!Player.Instance.isGemsAvailableToOpenChest(ChestModel.GemsRequiredToOpen))
-       {
-          Debug.Log("Not Enough Gems");
-          return;
-       }
-
-       Player.Instance.ReduceGems(ChestModel.GemsRequiredToOpen);
+       OnPressedOpeNowButton?.Invoke(ChestModel.GemsRequiredToOpen);
      
-       await OpenChest();
+      // IF player hase sufficient gems
+      if(PlayerService.Instance.IsGemsSufficient(ChestModel.GemsRequiredToOpen))
+      {
+       OpenChest();
+      }
     }
 
 
-    void UpdateTheOpenButtonText()
+    void UpdateOpenNowButtonText()
     {
-       ChestView.ButtonText.text ="Open Now-" + ChestModel.GemsRequiredToOpen;
+        if(ChestView != null)
+        {
+            ChestView.ButtonText.text = "Open Now "+ChestModel.GemsRequiredToOpen;
+            ChestView.CrystalImage.gameObject.SetActive(true);
+        }
     }
 
 
-    private async System.Threading.Tasks.Task OpenChest()
+    private async void OpenChest()
     {
        IsChestClosed = false;
        ChestService.Instance.IsChestTimerStart = false;
-       ChestView.ChestButton.onClick.RemoveAllListeners();
+          
+       OnChestOpen?.Invoke(ChestModel.CoinsStored,ChestModel.GemsStored);    
        
-       ChestView.StoredCoinsText.text ="- 0 ";
-       ChestView.StoredGemsText.text ="- 0 ";
-       ChestView.TimerText.text ="- 0";
+       await DetachTheView();
+    }  
+
+
+    private async System.Threading.Tasks.Task DetachTheView()
+    {
+       if(ChestView != null)
+       {
+       ChestView.ChestButton.onClick.RemoveAllListeners(); 
+       ChestView.AddToQueueButton.onClick.RemoveAllListeners();
+
+       ClearChestViewText(); 
 
        ChestView.ChestButton.gameObject.SetActive(false);
        ChestView.TimerText.gameObject.SetActive(false);
+       ChestView.CrystalImage.gameObject.SetActive(false);
         
        ChestView.ChestImage.sprite = ChestModel.OpenedChestImage;
-       ChestService.Instance.InvokeOnChestOpen(ChestModel.CoinsStored, ChestModel.GemsStored);
        
+    
        await  System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(0.5)); 
 
        ChestView.ChestImage.gameObject.SetActive(false); 
        ChestView.ChestImage.sprite = null;
-      
-       await  System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+       }
+       await  System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(0.5));
 
        ChestView.ChestController = null;
-    }    
+
+    }  
+
+    private void ClearChestViewText()
+    {
+       ChestView.StoredCoinsText.text ="- 0 ";
+       ChestView.StoredGemsText.text ="- 0 ";
+       ChestView.TimerText.text ="- 0";
+    }
 
 
 }

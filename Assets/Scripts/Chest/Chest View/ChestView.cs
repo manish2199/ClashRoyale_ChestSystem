@@ -7,6 +7,9 @@ public class ChestView : MonoBehaviour , Container
 {
   [HideInInspector] public ChestController ChestController;
 
+  public GameObject WaitingPanel;
+  public Button AddToQueueButton;
+
   public Text StoredCoinsText;
     
   public Text StoredGemsText;
@@ -19,7 +22,8 @@ public class ChestView : MonoBehaviour , Container
   
   public Button ChestButton;
   public Text ButtonText;
-  
+  public Image CrystalImage;
+
   public Transform ChestSlotTransform;
 
 
@@ -31,6 +35,5 @@ public class ChestView : MonoBehaviour , Container
     }
     return false;
   }
-
 
 }

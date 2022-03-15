@@ -39,7 +39,5 @@ public class ChestModel
    public Sprite OpenedChestImage;
   
    public string TextForTimerButton;
-
-//    public Button OpenNowButton; 
-
+   
 }

@@ -11,40 +11,59 @@ public class ChestService : GenericSingleton<ChestService>
 
     [SerializeField] ChestScriptableObjectList Chest;
 
-    [SerializeField] GameObject ScrollingPanel;
+    [SerializeField] GameObject ScrollingChestPanel;
+   
 
     [SerializeField] int NoOfEmptySlots;
 
-   [HideInInspector] public bool IsChestTimerStart;
+    [HideInInspector] public bool IsChestTimerStart;
 
-   public static event Action<int,int> OnChestOpen;
 
-   void Awake()
+    MyQueue<ChestController> WaitingQueue;
+    [SerializeField] int NumOfChestCanWait;
+    private int ChestWaiting ;
+    [SerializeField] Text ChestsWaitingText;
+
+    public static event Action OnInvalidEmptySlotEntry;
+    public static event Action OnSlotsFull;
+    public static event Action OnWaitingQueueFull;
+    public static event Action OnRepeatationInQueue;
+
+
+   void OnEnable()
    {
-       base.Awake();
+       ChestController.OnChestOpen += OpenChestInsideWaitingQueue;
    }
 
-   public void InvokeOnChestOpen(int Coin , int Gem)
-   { 
-      OnChestOpen?.Invoke(Coin,Gem);  
+   void OnDisable()
+   {
+       ChestController.OnChestOpen -= OpenChestInsideWaitingQueue;
    }
     
 
    void Start()
    {  
-      IsChestTimerStart = false; 
+      SetupTheChestSystem();
       CreateEmptyChestSlots();
+   }
+
+   void SetupTheChestSystem()
+   {
+      ChestWaiting = 0;
+      ChestsWaitingText.text = ChestWaiting.ToString();
+      WaitingQueue = new MyQueue<ChestController>(NumOfChestCanWait);
+      IsChestTimerStart = false; 
    }
 
 
    void CreateEmptyChestSlots()
    {
-        ListOfChestSlots = new ChestView[NoOfEmptySlots];
+       ListOfChestSlots = new ChestView[NoOfEmptySlots];
      
        for(int i = 0; i<NoOfEmptySlots ; i++)
        {
-            var temp =GameObject.Instantiate<ChestView>(ChestSlot,new Vector3(ScrollingPanel.transform.position.x,ScrollingPanel.transform.position.y,ScrollingPanel.transform.position.z),Quaternion.identity);
-            temp.transform.SetParent(ScrollingPanel.transform,false);  
+            var temp =GameObject.Instantiate<ChestView>(ChestSlot,new Vector3(ScrollingChestPanel.transform.position.x,ScrollingChestPanel.transform.position.y,ScrollingChestPanel.transform.position.z),Quaternion.identity);
+            temp.transform.SetParent(ScrollingChestPanel.transform,false);  
             ListOfChestSlots[i]= temp;
        }
    }
@@ -53,13 +72,13 @@ public class ChestService : GenericSingleton<ChestService>
    {
         if(NoOfEmptySlots == 0)
         {
-            print("Not Enough Slots to add Chest");
+            OnInvalidEmptySlotEntry?.Invoke();
             return;
         }
 
         if(!IsSlotListEmpty())
         {
-            print("All Slots are full cant Add Chest");
+            OnSlotsFull?.Invoke();
             return;
         }
 
@@ -109,6 +128,47 @@ public class ChestService : GenericSingleton<ChestService>
           return false;
        }
        return true;
+   } 
+
+
+   public void AddChestInWaitingQueue(ChestController chestController)
+   { 
+    //    var temp = WaitingQueue.
+       if( WaitingQueue.getCount() != 0 && chestController == WaitingQueue.GetRear() )
+       {
+          OnRepeatationInQueue?.Invoke();
+          Debug.Log("Already Added to queue ");
+          return;
+       }
+      
+       if(NumOfChestCanWait > 0)
+       {
+           NumOfChestCanWait --;
+           ChestWaiting ++;
+           ChestsWaitingText.text = ChestWaiting.ToString();
+           WaitingQueue.enqueue(chestController);
+
+       }
+       else if( NumOfChestCanWait == 0)
+       {
+          print("Waiting Queue is Full");
+          OnWaitingQueueFull?.Invoke();
+       }
+   }
+
+    void OpenChestInsideWaitingQueue(int temp1, int temp2)
+   {
+       if(WaitingQueue.getCount() != 0)
+       {
+           print("Waiting Queue is not empty");
+           ChestController temp = WaitingQueue.dequeue();
+           temp.StartTimer();
+           NumOfChestCanWait ++;
+           ChestWaiting--;
+           ChestsWaitingText.text = ChestWaiting.ToString();
+       }
    }
 
 }
+
+
