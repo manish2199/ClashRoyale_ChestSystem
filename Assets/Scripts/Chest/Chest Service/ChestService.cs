@@ -19,16 +19,15 @@ public class ChestService : GenericSingleton<ChestService>
     [HideInInspector] public bool IsChestTimerStart;
 
 
-    MyQueue<ChestController> WaitingQueue;
+    Queue<ChestController> WaitingQueue;
     [SerializeField] int NumOfChestCanWait;
     private int ChestWaiting ;
     [SerializeField] Text ChestsWaitingText;
+    
 
     public static event Action OnInvalidEmptySlotEntry;
     public static event Action OnSlotsFull;
     public static event Action OnWaitingQueueFull;
-    public static event Action OnRepeatationInQueue;
-
 
    void OnEnable()
    {
@@ -38,6 +37,12 @@ public class ChestService : GenericSingleton<ChestService>
    void OnDisable()
    {
        ChestController.OnChestOpen -= OpenChestInsideWaitingQueue;
+   }
+
+
+   public void InvokeOnWaitingQueueFull()
+   {
+        OnWaitingQueueFull?.Invoke();
    }
     
 
@@ -51,8 +56,9 @@ public class ChestService : GenericSingleton<ChestService>
    {
       ChestWaiting = 0;
       ChestsWaitingText.text = ChestWaiting.ToString();
-      WaitingQueue = new MyQueue<ChestController>(NumOfChestCanWait);
+      WaitingQueue = new Queue<ChestController>();
       IsChestTimerStart = false; 
+
    }
 
 
@@ -131,37 +137,29 @@ public class ChestService : GenericSingleton<ChestService>
    } 
 
 
-   public void AddChestInWaitingQueue(ChestController chestController)
+   public bool CanAddChestToQueue()
    { 
-    //    var temp = WaitingQueue.
-       if( WaitingQueue.getCount() != 0 && chestController == WaitingQueue.GetRear() )
-       {
-          OnRepeatationInQueue?.Invoke();
-          Debug.Log("Already Added to queue ");
-          return;
-       }
-      
        if(NumOfChestCanWait > 0)
        {
-           NumOfChestCanWait --;
-           ChestWaiting ++;
-           ChestsWaitingText.text = ChestWaiting.ToString();
-           WaitingQueue.enqueue(chestController);
+           return true;
+       }
+       return false;
+   }
 
-       }
-       else if( NumOfChestCanWait == 0)
-       {
-          print("Waiting Queue is Full");
-          OnWaitingQueueFull?.Invoke();
-       }
+
+   public void AddChestInWaitingQueue(ChestController chestController)
+   { 
+        NumOfChestCanWait --;
+        ChestWaiting ++;
+        ChestsWaitingText.text = ChestWaiting.ToString();
+        WaitingQueue.Enqueue(chestController);
    }
 
     void OpenChestInsideWaitingQueue(int temp1, int temp2)
    {
-       if(WaitingQueue.getCount() != 0)
+       if(WaitingQueue.Count != 0)
        {
-           print("Waiting Queue is not empty");
-           ChestController temp = WaitingQueue.dequeue();
+           ChestController temp = WaitingQueue.Dequeue();
            temp.StartTimer();
            NumOfChestCanWait ++;
            ChestWaiting--;

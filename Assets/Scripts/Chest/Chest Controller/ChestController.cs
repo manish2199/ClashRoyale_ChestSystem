@@ -47,13 +47,21 @@ public class ChestController
     {          
        if(!ChestService.Instance.IsChestTimerStart)
        {    
+           if(ChestView.ChestButton.gameObject.activeInHierarchy == false)
+           {
+               ChestView.ChestButton.gameObject.SetActive(true);
+           }
+           if(ChestView.WaitingListText.gameObject.activeInHierarchy == true)
+           {
+             ChestView.WaitingListText.gameObject.SetActive(false);
+           }
+            
             ChestView.ChestButton.onClick.RemoveAllListeners();
             ChestService.Instance.IsChestTimerStart = true;
 
             UpdateOpenNowButtonText();
            
             ChestView.ChestButton.onClick.AddListener( ()=> OpenNowButton() );
-            
             
             ChestView.TimerText.gameObject.SetActive(true);
 
@@ -85,7 +93,17 @@ public class ChestController
 
     void AddChestToWaitingQueue()
     {
-        ChestService.Instance.AddChestInWaitingQueue(ChestView.ChestController);
+        if(ChestService.Instance.CanAddChestToQueue())
+        {
+           ChestService.Instance.AddChestInWaitingQueue(ChestView.ChestController);
+           ChestView.ChestButton.gameObject.SetActive(false);
+           ChestView.WaitingListText.gameObject.SetActive(true);
+        }
+        else
+        {
+            ChestService.Instance.InvokeOnWaitingQueueFull();
+        }
+
     }
 
 
@@ -155,6 +173,7 @@ public class ChestController
 
        ClearChestViewText(); 
 
+       ChestView.WaitingListText.gameObject.SetActive(false);
        ChestView.ChestButton.gameObject.SetActive(false);
        ChestView.TimerText.gameObject.SetActive(false);
        ChestView.CrystalImage.gameObject.SetActive(false);
@@ -179,7 +198,6 @@ public class ChestController
        ChestView.StoredGemsText.text ="- 0 ";
        ChestView.TimerText.text ="- 0";
     }
-
 
 }
 

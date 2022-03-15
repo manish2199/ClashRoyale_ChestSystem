@@ -21,8 +21,7 @@ public class NotificationManager : MonoBehaviour
    {
        ChestService.OnInvalidEmptySlotEntry += ShowInvalidSlotsEntryWarning;
        ChestService.OnSlotsFull += ShowSlotsFullWarning;
-       ChestService.OnWaitingQueueFull += ShowWaitingQueueWarning;
-       ChestService.OnRepeatationInQueue += ShowRepeatationWarningPanel;
+       ChestService.OnWaitingQueueFull += ShowWaitingQueueWarning; 
        PlayerService.OnInsufficientGems += ShowInsufficientWarningWarningPanel;
    }
 
@@ -31,7 +30,6 @@ public class NotificationManager : MonoBehaviour
        ChestService.OnInvalidEmptySlotEntry -= ShowInvalidSlotsEntryWarning;
        ChestService.OnSlotsFull -= ShowSlotsFullWarning;
        ChestService.OnWaitingQueueFull -= ShowWaitingQueueWarning;
-       ChestService.OnRepeatationInQueue -= ShowRepeatationWarningPanel;
        PlayerService.OnInsufficientGems -= ShowInsufficientWarningWarningPanel;
    }
 
@@ -48,21 +46,6 @@ public class NotificationManager : MonoBehaviour
        yield return new WaitForSeconds(1f);
 
        InsufficientGemWarningPanel.SetActive(false);
-    }
-
-    void ShowRepeatationWarningPanel()
-   {
-       StartCoroutine(RepeatationWarning());
-   }
-
-             
-    IEnumerator RepeatationWarning()
-    {
-       RepeatationWarningPanel.SetActive(true);
-
-       yield return new WaitForSeconds(1f);
-
-       RepeatationWarningPanel.SetActive(false);
     }
 
     void ShowWaitingQueueWarning()

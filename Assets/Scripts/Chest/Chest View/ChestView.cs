@@ -15,6 +15,8 @@ public class ChestView : MonoBehaviour , Container
   public Text StoredGemsText;
 
   public Text TimerText;
+
+  public Text WaitingListText;
  
   public Image ChestImage;
 

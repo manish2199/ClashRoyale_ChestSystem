@@ -11,7 +11,6 @@ public class GenericSingleton<T> : MonoBehaviour where T : GenericSingleton<T>
   protected void Awake()
   {
       CreateSingleton(); 
-      print("CreateSingleton");
   }
 
    private void CreateSingleton()
