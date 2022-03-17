@@ -11,8 +11,6 @@ public class NotificationManager : MonoBehaviour
 
    [SerializeField] GameObject WaitingQueueWarningPanel;
 
-   [SerializeField] GameObject RepeatationWarningPanel;
-
    [SerializeField] GameObject InsufficientGemWarningPanel;
 
 

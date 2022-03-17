@@ -15,7 +15,7 @@ MonoBehaviour:
   ChestType: 1
   CoinsStored: 30
   GemsStored: 15
-  TimeRequiredToOpen: 20
+  TimeRequiredToOpen: 2
   GemsRequiredToOpen: 2
   ClosedChestImage: {fileID: 21300000, guid: a462be60d3d366a4aaf513424adc76e3, type: 3}
   OpenedChestImage: {fileID: 2551925020727932727, guid: 5cdb9306fe2b58c41adfea2f2ebf6ce1, type: 3}

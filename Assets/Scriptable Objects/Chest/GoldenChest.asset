@@ -15,8 +15,8 @@ MonoBehaviour:
   ChestType: 2
   CoinsStored: 50
   GemsStored: 20
-  TimeRequiredToOpen: 30
-  GemsRequiredToOpen: 3
+  TimeRequiredToOpen: 9
+  GemsRequiredToOpen: 2
   ClosedChestImage: {fileID: 21300000, guid: 7efc2eb08c42f7d4e956a660b749b6b6, type: 3}
   OpenedChestImage: {fileID: -7382502343519384980, guid: 5cdb9306fe2b58c41adfea2f2ebf6ce1, type: 3}
   TextForTimerButton: Start Timer

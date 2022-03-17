@@ -19,13 +19,14 @@ public class PlayerService : GenericSingleton<PlayerService>
 
    void OnEnable()
    {
-       ChestController.OnChestOpen += ChestOpened; 
-       ChestController.OnPressedOpeNowButton += ReduceGems; 
+       ChestService.OnChestOpen += ChestOpened; 
+       ChestService.OnPressedOpeNowButton += ReduceGems; 
    }
 
    void OnDisable()
    {
-       ChestController.OnPressedOpeNowButton += ReduceGems; 
+       ChestService.OnChestOpen -= ChestOpened; 
+       ChestService.OnPressedOpeNowButton -= ReduceGems; 
    }
 
    void Start()

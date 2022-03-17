@@ -855,7 +855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChestSlot: {fileID: 7373711024394440819, guid: 55205f8c8dabc444c8bfa82e0cd3257a, type: 3}
-  Chest: {fileID: 11400000, guid: f3569ddfd39f2d645ae20c0c38fa541d, type: 2}
+  Chests: {fileID: 11400000, guid: f3569ddfd39f2d645ae20c0c38fa541d, type: 2}
   ScrollingChestPanel: {fileID: 1474867519}
   NoOfEmptySlots: 4
   IsChestTimerStart: 0
