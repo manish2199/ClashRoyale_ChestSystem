@@ -6,23 +6,22 @@ using UnityEngine.UI;
 
 public class ChestService : GenericSingleton<ChestService>
 {
-    [SerializeField] ChestSlot ChestSlot;
+    [SerializeField] private ChestSlot ChestSlot;
 
-    ChestSlot[] ListOfChestSlots;
-
-    [SerializeField] ChestScriptableObjectList Chests;
-
-    [SerializeField] GameObject ScrollingChestPanel;
-   
-    [SerializeField] int NoOfEmptySlots;
-
-    [HideInInspector] public static bool IsChestTimerStart;
+    [SerializeField] private ChestScriptableObjectList Chests;
+    
+    [SerializeField] private GameObject ScrollingChestPanel;
+    
+    [SerializeField] private int NoOfEmptySlots;
+    
+    private ChestSlot[] ListOfChestSlots;
 
     Queue<ChestSlot> WaitingQueue;
     [SerializeField] int NumOfChestCanWait;
     private int ChestWaiting ;
     [SerializeField] Text ChestsWaitingText;
     
+    [HideInInspector]public bool IsChestTimerStart; 
 
     public static event Action OnInvalidEmptySlotEntry;
     public static event Action OnSlotsFull;
@@ -30,16 +29,6 @@ public class ChestService : GenericSingleton<ChestService>
 
     public static event Action<int,int> OnChestOpen;
     public static event Action<int> OnPressedOpeNowButton;
-
-   void OnEnable()
-   {
-       ChestService.OnChestOpen += OpenChestInsideWaitingQueue;
-   }
-
-   void OnDisable()
-   {
-       ChestService.OnChestOpen -= OpenChestInsideWaitingQueue;
-   }
    
    public void InvokeOnChestOpen(int Coin,int gems)
    {
@@ -78,7 +67,7 @@ public class ChestService : GenericSingleton<ChestService>
      
        for(int i = 0; i<NoOfEmptySlots ; i++)
        {
-            var temp =GameObject.Instantiate<ChestSlot>(ChestSlot,new Vector3(ScrollingChestPanel.transform.position.x,ScrollingChestPanel.transform.position.y,ScrollingChestPanel.transform.position.z),Quaternion.identity);
+            var temp =GameObject.Instantiate(ChestSlot,new Vector3(ScrollingChestPanel.transform.position.x,ScrollingChestPanel.transform.position.y,ScrollingChestPanel.transform.position.z),Quaternion.identity);
             temp.transform.SetParent(ScrollingChestPanel.transform,false);  
             ListOfChestSlots[i]= temp;
        }
@@ -163,12 +152,13 @@ public class ChestService : GenericSingleton<ChestService>
         WaitingQueue.Enqueue(chest);
    }
 
-    void OpenChestInsideWaitingQueue(int temp1, int temp2)
-   {
-       if(WaitingQueue.Count != 0)
+    public void OpenChestInsideWaitingQueue()
+   {  
+       if(WaitingQueue.Count != 0 && !IsChestTimerStart )
        {
+           Debug.Log("Inside Waiting function");
            ChestSlot temp = WaitingQueue.Dequeue();
-           temp.StartTimer();
+           temp.timerState.StartTimer();
            NumOfChestCanWait ++;
            ChestWaiting--;
            ChestsWaitingText.text = ChestWaiting.ToString();

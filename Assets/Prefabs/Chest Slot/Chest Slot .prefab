@@ -768,7 +768,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -8, y: 0}
+  m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7373711023932118388
@@ -1063,8 +1063,8 @@ GameObject:
   - component: {fileID: 7373711024394440817}
   - component: {fileID: 7373711024394440816}
   - component: {fileID: 7373711024394440819}
-  - component: {fileID: 5926101487895290189}
-  - component: {fileID: 7806793462830306153}
+  - component: {fileID: 4149672078190893920}
+  - component: {fileID: 742768098215442196}
   m_Layer: 5
   m_Name: 'Chest Slot '
   m_TagString: Untagged
@@ -1150,6 +1150,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chestScriptableObject: {fileID: 0}
+  TimeRequiredToOpen: 0
+  GemsRequiredToOpen: 0
+  IsChestClosed: 0
   WaitingPanel: {fileID: 8098696229814683917}
   AddToQueueButton: {fileID: 3645989343428047404}
   StoredCoinsText: {fileID: 7373711023310372165}
@@ -1162,31 +1165,30 @@ MonoBehaviour:
   ButtonText: {fileID: 7373711023932118391}
   CrystalImage: {fileID: 6658812337668686641}
   ChestSlotTransform: {fileID: 7373711024394440818}
-  IsChestClosed: 0
-  TimerState: {fileID: 5926101487895290189}
-  OpenChestState: {fileID: 7806793462830306153}
---- !u!114 &5926101487895290189
+  timerState: {fileID: 4149672078190893920}
+  OpenChestState: {fileID: 742768098215442196}
+--- !u!114 &4149672078190893920
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7373711024394440781}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b03d56487becff34ea9767ea306a62fd, type: 3}
+  m_Script: {fileID: 11500000, guid: 76368fa73d99b8b40ad1408d293e85ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7806793462830306153
+--- !u!114 &742768098215442196
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7373711024394440781}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ace9ec08ae344004d8d281c56a99d087, type: 3}
+  m_Script: {fileID: 11500000, guid: 9dd7ba7d7af726b44a4732da6d63fa60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7432359246477172346

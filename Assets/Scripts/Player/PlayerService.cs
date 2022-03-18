@@ -61,10 +61,10 @@ public class PlayerService : GenericSingleton<PlayerService>
 
    public void ReduceGems(int requiredGems)
    {
-      if(Gems < requiredGems)
+      if(!IsGemsSufficient(requiredGems))
       {
-          OnInsufficientGems?.Invoke();
-          return;
+        OnInsufficientGems?.Invoke();
+        return;
       }
       Gems -= requiredGems;
    }
