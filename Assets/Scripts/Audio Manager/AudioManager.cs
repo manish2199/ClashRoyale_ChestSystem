@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class AudioManager : GenericSingleton<AudioManager>
 {
-    [SerializeField] AudioSource BackgroundAudioSource;
+   [SerializeField] AudioSource BackgroundAudioSource;
 
-    [SerializeField] AudioSource EffectsAudioSource;
+   [SerializeField] AudioSource EffectsAudioSource;
 
-    // [SerializeField] AudioClip ButtonClickAudio; 
-
-    // [SerializeField] AudioClip BackgroundAudio; 
-
-
-    public void ButtonClickAudio()
+  void Start()
+  {
+     BackgroundAudioSource.Play();
+  }
+   
+    public void CreateChestButton()
    {
        EffectsAudioSource.Play();
    }
-
 
 }
