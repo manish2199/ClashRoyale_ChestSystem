@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6ba13a5eb3014b44afbb87d9adb2b8c, type: 3}
+  m_Name: MagicalChest
+  m_EditorClassIdentifier: 
+  ChestType: 3
+  CoinsStored: 80
+  GemsStored: 50
+  TimeRequiredToOpen: 40
+  GemsRequiredToOpen: 4
+  ClosedChestImage: {fileID: 21300000, guid: 69e9fb93ed2982343a0afecae83ce1b2, type: 3}
+  OpenedChestImage: {fileID: -1958168592741684278, guid: 5cdb9306fe2b58c41adfea2f2ebf6ce1, type: 3}
+  TextForTimerButton: Start Timer
