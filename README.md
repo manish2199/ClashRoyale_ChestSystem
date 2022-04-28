@@ -12,6 +12,12 @@
   
 ##
 
+
+# GamePlay Video 
+
+YouTube Link - https://youtu.be/giNh9hGJghU
+
+
 # Screenshots
 <img width="722" alt="cls1" src="https://user-images.githubusercontent.com/93328047/163783806-f5594926-1fae-478e-94fb-e148db6d0c17.png">
 <img width="725" alt="cls2" src="https://user-images.githubusercontent.com/93328047/163783820-a5c41ac5-8787-4be4-a6e6-6f4297980d69.png">
