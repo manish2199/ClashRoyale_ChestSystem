@@ -6,7 +6,7 @@
   
   2.Singleton Pattern.
   
-  3.Obserdesign Pattern.
+  3.Observer design Pattern.
   
   4.Used Queue Datastructure to create Chest (Waiting Chest List) Feature
   
