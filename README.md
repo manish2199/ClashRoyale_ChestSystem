@@ -2,13 +2,21 @@
   Prototype of Clash Royale Chest System 
 
 # Features
-  1.Used Scriptable Object.
+  1.Customizable Chest Types.
   
-  2.Singleton Pattern.
+  2.Timer Feature for each chest slots.
   
-  3.Observer design Pattern.
+  3.Waiting Queue Feature ( Can add chest in waiting list while other chest's timer is ongoing )
   
-  4.Used Queue Datastructure to create Chest (Waiting Chest List) Feature
+ 
+# Programming Concepts Used
+  
+  1.Used Scriptable Object to configure the chest types.
+  
+  2.Singleton Pattern for different services / managers (e.g PlayerService,ChestService).
+  
+  3.Used Queue Datastructure to create Chest Waiting List Feature
+  
   
 ##
 
